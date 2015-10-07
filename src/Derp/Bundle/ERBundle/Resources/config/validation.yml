@@ -1,0 +1,13 @@
+Derp\Application\RegisterWalkIn:
+  properties:
+    firstName:
+      - NotBlank: ~
+    lastName:
+      - NotBlank: ~
+    dateOfBirth:
+      - Date: ~
+    sex:
+      - Choice:
+          choices: ["male", "female", "intersex"]
+    indication:
+      - NotBlank: ~

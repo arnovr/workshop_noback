@@ -1,0 +1,27 @@
+services:
+  register_walk_in_handler:
+    class: Derp\Application\RegisterWalkInHandler
+    arguments:
+      - @infrastructure.doctrine_patient_repository
+    tags:
+      - { name: command_handler, handles: Derp\Application\RegisterWalkIn }
+
+  walk_in_registered_send_email:
+    class: Derp\Infrastructure\WalkInRegisteredSendEmail
+    arguments:
+      - @mailer
+    tags:
+      - { name: event_subscriber, subscribes_to: Derp\Domain\Model\WalkInRegistered }
+
+  infrastructure.doctrine_patient_repository:
+    class: Derp\Infrastructure\Persistence\DoctrinePatientRepository
+    arguments:
+      - @doctrine
+
+  infrastructure.patient_repository:
+    alias: infrastructure.doctrine_patient_repository
+
+  infrastructure.register_walk_in_command:
+    class: Derp\Infrastructure\Cli\RegisterWalkInCommand
+    tags:
+      - { name: console.command }

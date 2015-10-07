@@ -1,0 +1,2 @@
+DerpERBundle:
+    resource: "@DerpERBundle/Resources/config/routing.yml"

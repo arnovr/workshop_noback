@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <h1>Patients</h1>
+    <p><a href="{{ path('register_walk_in') }}" class="btn btn-success">Register Walk In</a></p>
+
+    <form action="{{ path('patient_find_by_last_name') }}" method="get" class="form-inline">
+        <div class="form-group">
+        <label for="lastName">Find by last name: </label>
+        <input type="text" id="lastName" name="lastName" value="{{ app.request.query.get('lastName') }}" class="form-control"/>
+        <button type="submit" class="btn btn-default">Find</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Sex</th>
+            <th>Has arrived?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for patient in patients %}
+            <tr>
+                <td>
+                    <a href="{{ path('patient_details', { id: patient.id }) }}">{{ patient.personalInformation.name.firstName ~ ' ' ~ patient.personalInformation.name.lastName }}</a></td>
+                <td>{{ patient.personalInformation.sex.sex }}</td>
+                <td>{{ patient.hasArrived ? 'yes' : 'no' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No matches</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
